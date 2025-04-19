@@ -1,0 +1,167 @@
+import 'package:flutter/material.dart';
+ 
+void main() {
+  runApp(myApp());
+}
+ 
+ // StatelessWidget não muda estado
+ // StatefulWidget muda o estado
+class myApp extends StatefulWidget {
+  @override
+  _myAppState createState() => _myAppState();
+}
+ 
+ 
+ class _myAppState extends State<myApp> {
+   final List<Map<String, dynamic>> perguntas = [
+     { //1
+       'pergunta': 'Qual o primeiro time campeão mundial de free fire?',
+       'opcoes': ['GPS', 'WAG', 'EVOS', 'TEREM'],
+       'respostaCorreta': 'EVOS'
+     }, //2
+     {
+       'pergunta': 'Qual o primeiro time brasileiro campeão mundial de free fire?',
+       'opcoes': ['FLUXO', 'LOUD', 'CORINTHIANS', 'PAIN'],
+       'respostaCorreta': 'CORINTHIANS'
+     }, //3
+     {
+       'pergunta': 'Qual o primeiro jogador brasileiro a bater a marca de 1000 abates?',
+       'opcoes': ['CAUAN7', 'NOBRU', 'MTS007', 'UBITA'],
+       'respostaCorreta': 'CAUAN7'
+     }, 
+     { //4
+       'pergunta': 'Quem foi o jogador MVP do Corithians no Mundial de 2019?',
+       'opcoes': ['OPIRES', 'NOBRU', 'LEVEL UP', 'FIXA'],
+       'respostaCorreta': 'NOBRU'
+     },
+     { //5
+       'pergunta': 'Qual time foi criado pelo youtuber BRUNO PLAYHARD',
+       'opcoes': ['FLUXO', 'PAIN', 'AMAZON CRIPZ', 'LOUD'],
+       'respostaCorreta': 'LOUD'
+     },
+     { //6
+       'pergunta': 'Qual jogador tinha o apelido de REI DO LANÇA?',
+       'opcoes': ['EL GATO', 'CRUSHER FOX', 'PIUZINHO', 'CHIN INSIDER'],
+       'respostaCorreta': 'EL GATO'
+     },
+     { //7
+       'pergunta': 'Qual o primeiro personagem ativo?',
+       'opcoes': ['ALOK', 'KAMIR', 'A124', 'TATSUYA'],
+       'respostaCorreta': 'ALOK'
+     },
+     { //8
+       'pergunta': 'Em qual mês foi lançado o FREE FIRE?',
+       'opcoes': ['DEZEMBRO', 'MARÇO', 'AGOSTO', 'FEVEREIRO'],
+       'respostaCorreta': 'DEZEMBRO'
+     },
+     {//9
+       'pergunta': 'Qual o primeiro passe do FREE FIRE?',
+       'opcoes': ['HIP HOP', 'SAKURA', 'STEAMPUNK', 'DESORDEM'],
+       'respostaCorreta': 'SAKURA'
+     },
+     { //10
+       'pergunta': 'Qual o melhor time emulador da história?',
+       'opcoes': ['NOISE 2020', 'FAZOP 2022', 'LOS 2021', 'FLAMENGO 2023'],
+       'respostaCorreta': 'FAZOP 2022'
+     },
+   ];
+   //inicializa os valores do quiz
+   int perguntaAtual = 0;
+   int pontos = 0;
+   String? mensagem;
+   bool quizFinalizado = false;
+ 
+   //função que verifica a resposta
+   void verificarResposta(String respostaEscolhida) {
+     String respostaCorreta = perguntas[perguntaAtual]['respostaCorreta'];
+ 
+     setState(() {
+       if (respostaEscolhida == respostaCorreta) {
+         pontos++;
+         mensagem = 'Resposta certa! +1';
+       } else {
+         mensagem = 'Resposta errada!';
+       }
+     });
+     //espera 2 segundos e passa para a próxima pergunta
+ 
+    Future.delayed(Duration(seconds: 0), () {
+     setState(() {
+       mensagem = null;
+       if(perguntaAtual < perguntas.length - 1){
+         perguntaAtual++;
+       } else {
+         quizFinalizado = true;
+       }
+     });
+   });
+   }//fim do método anteior
+   
+   // método para reiniciar o quiz
+   void reiniciarQuiz(){
+     setState(() {
+       perguntaAtual = 0;
+       pontos = 0;
+       quizFinalizado = false;
+       mensagem = null;
+     });
+   }
+
+   @override
+   Widget build(BuildContext context) {
+     return MaterialApp(
+       theme:ThemeData.dark(),
+       darkTheme: ThemeData.dark(),
+       home: Scaffold(
+         appBar: AppBar(title: Text('QUIZ SOBRE FREE FIRE')),
+          body: Center(
+            child: quizFinalizado ? Column(
+              mainAxisAlignment: MainAxisAlignment.center, //alinhamento da vertical
+              children: [ 
+                Image.network('data:image/jpeg;base64,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', width: 400, height: 400),
+                Text('Parabéns você terminou o quiz!',
+                 textAlign: TextAlign.center,
+                 style: TextStyle(fontSize: 24)
+                 ),
+                 SizedBox(height: 20),
+                 Text(
+                  'Você acertou $pontos de ${perguntas.length} perguntas!'
+                 ),
+                 SizedBox(height: 20),
+                 ElevatedButton(
+                  onPressed: reiniciarQuiz,
+                  child: Text('Recomeçar')
+                 ),
+              ],
+            ) : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1024px-Flag_of_Brazil.svg.png', width: 200, height: 200),
+                SizedBox(height: 20),
+                Text(
+                  perguntas[perguntaAtual]['pergunta'],
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                ...perguntas[perguntaAtual]['opcoes'].map<Widget>((opcao){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: ElevatedButton(
+                      onPressed: mensagem == null ? () => verificarResposta(opcao) : null,
+                      child: Text(opcao)
+                    ),
+                  );
+                }).toList(),
+                SizedBox(height: 20),
+                if(mensagem != null)
+                  Text(mensagem!),
+                SizedBox(height: 20),
+                Text('Pontuação: $pontos')
+              ],
+            )
+         ),
+       )
+     );
+   }
+     
+   }
