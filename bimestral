@@ -82,17 +82,17 @@ class _myAppState extends State<myApp> {
 
   String getImagemResultado() {
     if (pontos == 10) {
-      return 'mestre';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110725/mestre-min.png' ;
     } else if (pontos >= 8) {
-      return 'diamante';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110712/dima-1-min.png';
     } else if (pontos >= 6) {
-      return 'platina';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110655/platina-1-min.png' ;
     } else if (pontos >= 4) {
-      return 'ouro';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110639/ouro-1-min.png';
     } else if (pontos >= 2) {
-      return 'prata';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110625/prata-1-min.png';
     } else {
-      return'bronze';
+      return 'https://static.tropafreefire.com.br/news/2020/04/26110559/bronze-1-min.png';
     }
   }
 
@@ -136,15 +136,8 @@ class _myAppState extends State<myApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-       home: Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('https://acdn-us.mitiendanube.com/stores/002/767/708/products/whatsapp-image-2023-07-11-at-14-36-481-2a82bbdef5451da5f616891059280721-640-0.png'), // sua imagem
-        fit: BoxFit.cover, // cobre toda a tela
-      ),
-    ),
-      child: Scaffold(
-        appBar: AppBar(title: Text('QUIZ SOBRE FREE FIRE'),backgroundColor: Colors.orange,centerTitle: true),
+       home: Scaffold(
+        appBar: AppBar(title: Text('QUIZ DE FREE FIRE'),backgroundColor: Colors.orange,centerTitle: true),
         body: Center(
           child:
               quizFinalizado
@@ -153,10 +146,10 @@ class _myAppState extends State<myApp> {
                         MainAxisAlignment.center, //alinhamento da vertical
                     children: [
                       Image.network(
-                        '',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStapPsr7FsO21sDsc7HFtl6Hcf9mCtamoT-w&s',
                       ),
                       Text(
-                        'Parabéns você terminou o quiz!',
+                        'Cabo pae =D',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 24),
                       ),
@@ -179,7 +172,7 @@ class _myAppState extends State<myApp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1024px-Flag_of_Brazil.svg.png',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKqdO_1BzdxCSdmT1QOYQqYC_VYVyYGaIs1g&s',
                         width: 200,
                         height: 200,
                       ),
@@ -204,10 +197,10 @@ class _myAppState extends State<myApp> {
                               onPressed:
                                   mensagem == null
                                       ? () => verificarResposta(opcao)
-                                      : null,
+                                      : null, style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
                               child: Text(opcao,
                               style: 
-                              TextStyle(color: Colors.blueGrey)
+                              TextStyle(color: Colors.white)
                               
                               ),
                             ),
@@ -222,6 +215,6 @@ class _myAppState extends State<myApp> {
                   ),
         ),
       ),
-    ));
+    );
   }
 }
