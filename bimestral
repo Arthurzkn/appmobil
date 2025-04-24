@@ -110,7 +110,7 @@ class _myAppState extends State<myApp> {
     });
     //espera 2 segundos e passa para a próxima pergunta
 
-    Future.delayed(Duration(seconds: 0), () {
+    Future.delayed(Duration(seconds: 2), () {
       setState(() {
         mensagem = null;
         if (perguntaAtual < perguntas.length - 1) {
