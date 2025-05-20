@@ -3,105 +3,107 @@ import 'package:flutter/material.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
-
-
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  final TextEditingController _preco1Controller = TextEditingController();
+  final TextEditingController _quantidade1Controller = TextEditingController();
+  final TextEditingController _preco2Controller = TextEditingController();
+  final TextEditingController _quantidade2Controller = TextEditingController();
 
-  TextEditingController _controllerAlcool = TextEditingController();
-  TextEditingController _controllerGasolina = TextEditingController();
   String _resultado = '';
-//calcular o melhor preço
-  void _calcular(){
-//pega o valor do alcool e gasolina
-  double? precoAlcool = double.tryParse(_controllerAlcool.text);
-  double? precoGasolina = double.tryParse(_controllerGasolina.text);
 
-  if(precoAlcool == null || precoGasolina == null){
+  void _calcularMelhorProduto() {
+    double? preco1 = double.tryParse(_preco1Controller.text);
+    double? quantidade1 = double.tryParse(_quantidade1Controller.text);
+    double? preco2 = double.tryParse(_preco2Controller.text);
+    double? quantidade2 = double.tryParse(_quantidade2Controller.text);
+
+    if (preco1 == null || quantidade1 == null || preco2 == null || quantidade2 == null || 
+        preco1 <= 0 || quantidade1 <= 0 || preco2 <= 0 || quantidade2 <= 0) {
+      setState(() {
+        _resultado = 'Coloca certinho ai';
+      });
+      return;
+    }
+
+    double custo1 = preco1 / quantidade1;
+    double custo2 = preco2 / quantidade2;
+
     setState(() {
-      _resultado = 'Digite um valor válido!';
-    });
-    return;
-     } else {
-    setState(() {
-      if (precoAlcool == precoGasolina) {
-        _resultado = 'Um não é melhor que outro';
-      } else if (precoAlcool / precoGasolina >= 0.7) {
-        _resultado = 'Gasolina é melhor';
+      if (custo1 == custo2) {
+        _resultado = 'Ambos os produtos têm o mesmo custo por unidade.';
+      } else if (custo1 < custo2) {
+        _resultado = 'Produto 1 é mais vantajoso (R\$ ${custo1.toStringAsFixed(2)} por unidade).';
       } else {
-        _resultado = 'Álcool é melhor';
+        _resultado = 'Produto 2 é mais vantajoso (R\$ ${custo2.toStringAsFixed(2)} por unidade).';
       }
     });
   }
-}
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alcool ou Gasolina?'),
-        backgroundColor: Colors.blue,
+        title: const Text('Comparador de Produtos'),
+        backgroundColor: Colors.yellow,
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 32),
-                child: Image.network('https://w7.pngwing.com/pngs/591/502/png-transparent-logo-generic-drug-bank-bank-globe-service-payment.png')
-                ),// LOGO
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text('Calcule o melhor preço',style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.network("https://www.istoedinheiro.com.br/wp-content/uploads/sites/17/istoeimagens/imagens/mi_873047740829475.jpg"),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: 
+              Text(
+                'Insira as informações:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Preço do Alcool',
-                  labelStyle: TextStyle(fontSize: 22)
-                ),
-                controller: _controllerAlcool,
+            ),
+            const Text('Produto 1', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Preço (R\$)'),
+              controller: _preco1Controller,
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Quantidade (Kg, L, etc)'),
+              controller: _quantidade1Controller,
+            ),
+            const SizedBox(height: 20),
+            const Text('Produto 2', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Preço (R\$)'),
+              controller: _preco2Controller,
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Quantidade (Kg, L, etc)'),
+              controller: _quantidade2Controller,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow,
+                foregroundColor: Colors.white,
+                textStyle: TextStyle(fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.symmetric(vertical: 20),
               ),
-              TextField(keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Preço do Gasolina',
-                  labelStyle: TextStyle(fontSize: 22)
-                ),
-                controller: _controllerGasolina
-              ),
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 30
-                  ),
-                ),
-                onPressed: _calcular,
-                child: Text('Calcular')
-              ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Text(
-                  _resultado,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  )
-                )
-              )
-            ],
-          ),
+              onPressed: _calcularMelhorProduto,
+              child: const Text('Comparar'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              _resultado,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );
