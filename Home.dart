@@ -9,22 +9,22 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final TextEditingController _preco1Controller = TextEditingController();
-  final TextEditingController _quantidade1Controller = TextEditingController();
   final TextEditingController _preco2Controller = TextEditingController();
+  final TextEditingController _quantidade1Controller = TextEditingController();
   final TextEditingController _quantidade2Controller = TextEditingController();
 
   String _resultado = '';
 
   void _calcularMelhorProduto() {
     double? preco1 = double.tryParse(_preco1Controller.text);
-    double? quantidade1 = double.tryParse(_quantidade1Controller.text);
     double? preco2 = double.tryParse(_preco2Controller.text);
+    double? quantidade1 = double.tryParse(_quantidade1Controller.text);
     double? quantidade2 = double.tryParse(_quantidade2Controller.text);
 
     if (preco1 == null || quantidade1 == null || preco2 == null || quantidade2 == null || 
         preco1 <= 0 || quantidade1 <= 0 || preco2 <= 0 || quantidade2 <= 0) {
       setState(() {
-        _resultado = 'Coloca certinho ai';
+        _resultado = 'Coloca alguma coisa ai man';
       });
       return;
     }
@@ -45,17 +45,21 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+      Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Comparador de Produtos'),
         backgroundColor: Colors.yellow,
       ),
+      backgroundColor: Colors.yellow[100],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network("https://www.istoedinheiro.com.br/wp-content/uploads/sites/17/istoeimagens/imagens/mi_873047740829475.jpg"),
+            Image.network("https://www.istoedinheiro.com.br/wp-content/uploads/sites/17/istoeimagens/imagens/mi_873047740829475.jpg", width: 100,height: 100),
+
             const Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: 
@@ -91,7 +95,7 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellow,
-                foregroundColor: Colors.white,
+                foregroundColor: Colors.black,
                 textStyle: TextStyle(fontWeight: FontWeight.bold),
                 padding: const EdgeInsets.symmetric(vertical: 20),
               ),
